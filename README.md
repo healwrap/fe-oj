@@ -1,8 +1,8 @@
-# Big FE OJ
+# FE OJ
 
 ## 1. 项目简介
 
-Big FE OJ 是一个面向前端开发者的在线编程练习平台，旨在帮助前端开发者提升编程能力，提供了大量的编程题目，涵盖了前端开发中的各个知识点，包括但不限于 HTML、CSS、JavaScript 等。同时项目支持本地运行无需后端服务，即可实现编程练习
+FE OJ 是一个面向前端开发者的在线编程练习平台，旨在帮助前端开发者提升编程能力，提供了大量的编程题目，涵盖了前端开发中的各个知识点，包括但不限于 HTML、CSS、JavaScript 等。同时项目支持本地运行无需后端服务，即可实现编程练习
 
 ## 2. 项目功能
 
@@ -33,7 +33,26 @@ Big FE OJ 是一个面向前端开发者的在线编程练习平台，旨在帮�
 
 1. 执行 js 代码
 
-> 可以利用`eval`函数、或者`new Function`函数执行代码
+> 1. 可以利用`eval`函数、或者`new Function`函数执行代码
+> 2. `eval`和`new Function` 执行代码时，作用域会有些区别
+>   - `eval`执行的代码会在当前作用域中执行，可以访问当前作用域中的变量
+>   - `new Function`创建的函数，无法获取到外部的作用域的变量，只能访问全局作用域(window)中的变量
+>   -  相比较而言`new Function`会更加安全一些
+> ```js
+> // 使用 eval
+> (function () {
+> 	var localVar = "local";
+> 	eval("console.log(localVar)"); // 输出 'local'
+> })();
+> 
+> // 使用 new Function
+> (function () {
+> 	var localVar = "local";
+> 	var func = new Function("console.log(typeof localVar, typeof  globalThis)"); // 输出 'undefined' 'object'
+> 	func();
+> })();
+> ```
+> 3. 为了防止代码执行过度阻塞主线程，可以使用`web worker`来执行代码，包括执行代码可以使用最大并发任务管理(作为拓展点了，暂时不考虑)
 
 2. 判断 JS 代码是否执行正确
 
