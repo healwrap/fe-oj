@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CSS挑战</title>
+  <style>
+    .container { display: flex; }
+    .editor { width: 40%; }
+    #preview { width: 60%; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="editor">
+      <select id="challenge">
+        <option value="line">0.5px线段</option>
+        <option value="triangle">三角形</option>
+        <option value="layout">三栏布局</option>
+      </select>
+      <textarea id="code" rows="15"></textarea>
+      <button onclick="runTest()">运行测试</button>
+      <div id="result"></div>
+    </div>
+    <iframe id="preview"></iframe>
+  </div>
+
+<script>
+const challenges = {
+  line: {
+    test: () => {
+      const el = preview.contentDocument.getElementById('target');
+      const style = getComputedStyle(el);
+      return parseFloat(style.height) === 0.5 || 
+             parseFloat(style.borderWidth) === 0.5;
+    }
+  },
+  triangle: {
+    test: () => {
+      const el = preview.contentDocument.getElementById('target');
+      const style = getComputedStyle(el);
+      return el.offsetWidth === 0 && 
+             el.offsetHeight === 0 &&
+             style.borderLeftWidth === '20px' &&
+             style.borderRightWidth === '20px' &&
+             style.borderBottomWidth === '34.64px';
+    }
+  },
+  layout: {
+    test: () => {
+      const container = preview.contentDocument.getElementById('container');
+      const children = container.children;
+      return getComputedStyle(container).display === 'flex' &&
+             children[1].offsetWidth > children[0].offsetWidth &&
+             children[1].offsetWidth > children[2].offsetWidth;
+    }
+  }
+};
+
+function runTest() {
+  const code = document.getElementById('code').value;
+  const challenge = document.getElementById('challenge').value;
+  
+  // 渲染用户代码
+  preview.srcdoc = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <style>${code}</style>
+      </head>
+      <body>
+        ${challenge === 'line' ? '<div id="target"></div>' : ''}
+        ${challenge === 'triangle' ? '<div id="target"></div>' : ''}
+        ${challenge === 'layout' ? `
+          <div id="container">
+            <div style="width: 200px"></div>
+            <div style="flex: 1"></div>
+            <div style="width: 200px"></div>
+          </div>
+        ` : ''}
+      </body>
+    </html>
+  `;
+
+  // 执行验证
+  preview.onload = () => {
+    const passed = challenges[challenge].test();
+    document.getElementById('result').innerText = 
+      passed ? '✅ 通过测试' : '❌ 未通过测试';
+  };
+}
+</script>
+</body>
+</html>
