@@ -1,200 +1,221 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
+  <head>
     <title>JS Coding Challenges</title>
     <style>
-        /* 样式优化 */
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px }
-        .problem-selector { margin-bottom: 20px }
-        .editor-container { position: relative; margin: 15px 0 }
-        #editor { height: 300px; border: 1px solid #ddd }
-        .test-results { margin-top: 20px }
-        .test-case { margin: 10px 0; padding: 10px; border-radius: 4px }
+      /* 样式优化 */
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .problem-selector {
+        margin-bottom: 20px;
+      }
+      .editor-container {
+        position: relative;
+        margin: 15px 0;
+      }
+      #editor {
+        height: 300px;
+        border: 1px solid #ddd;
+      }
+      .test-results {
+        margin-top: 20px;
+      }
+      .test-case {
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 4px;
+      }
     </style>
     <!-- 引入CodeMirror -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.0/mode/javascript/javascript.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <!-- 题目选择器 -->
-        <select id="problemSelector" class="problem-selector" onchange="loadProblem(this.value)"></select>
-        
-        <!-- 题目描述区 -->
-        <div id="problemDescription"></div>
-        
-        <!-- 代码编辑器 -->
-        <div class="editor-container">
-            <textarea id="code"></textarea>
-        </div>
+      <!-- 题目选择器 -->
+      <select
+        id="problemSelector"
+        class="problem-selector"
+        onchange="loadProblem(this.value)"
+      ></select>
 
-        <button onclick="runTests()">运行测试</button>
-        
-        <!-- 测试结果 -->
-        <div id="results" class="test-results"></div>
+      <!-- 题目描述区 -->
+      <div id="problemDescription"></div>
+
+      <!-- 代码编辑器 -->
+      <div class="editor-container">
+        <textarea id="code"></textarea>
+      </div>
+
+      <button onclick="runTests()">运行测试</button>
+
+      <!-- 测试结果 -->
+      <div id="results" class="test-results"></div>
     </div>
 
-<script>
-// 题目配置数据
-const problems = {
-    problem1: {
-        title: "问题 #1：实现加法函数",
-        description: "编写一个函数 sum，接受两个数字参数并返回它们的和",
-        initialCode: `function sum(a, b) {\n    // 你的代码\n}`,
-        testCases: [
+    <script>
+      // 题目配置数据
+      const problems = {
+        problem1: {
+          title: '问题 #1：实现加法函数',
+          description: '编写一个函数 sum，接受两个数字参数并返回它们的和',
+          initialCode: `function sum(a, b) {\n    // 你的代码\n}`,
+          testCases: [
             { args: [1, 2], expected: 3 },
-            { args: [5, -3], expected: 2 }
-        ],
-        funcName: 'sum',
-        params: ['a', 'b']
-    },
-    problem2: {
-        title: "问题 #2：数组求和",
-        description: "编写函数 arraySum，计算数字数组的总和",
-        initialCode: `function arraySum(arr) {\n    // 你的代码\n}`,
-        testCases: [
-            { args: [[1,2,3]], expected: 6 },
-            { args: [[-5, 10]], expected: 5 }
-        ],
-        funcName: 'arraySum',
-        params: ['arr']
-    }
-};
+            { args: [5, -3], expected: 2 },
+          ],
+          funcName: 'sum',
+          params: ['a', 'b'],
+        },
+        problem2: {
+          title: '问题 #2：数组求和',
+          description: '编写函数 arraySum，计算数字数组的总和',
+          initialCode: `function arraySum(arr) {\n    // 你的代码\n}`,
+          testCases: [
+            { args: [[1, 2, 3]], expected: 6 },
+            { args: [[-5, 10]], expected: 5 },
+          ],
+          funcName: 'arraySum',
+          params: ['arr'],
+        },
+      };
 
-let currentProblem = 'problem1';
-let editor;
+      let currentProblem = 'problem1';
+      let editor;
 
-// 初始化编辑器
-function initEditor() {
-    editor = CodeMirror.fromTextArea(document.getElementById('code'), {
-        lineNumbers: true,
-        mode: 'javascript',
-        theme: 'default',
-        indentUnit: 4
-    });
-}
+      // 初始化编辑器
+      function initEditor() {
+        editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+          lineNumbers: true,
+          mode: 'javascript',
+          theme: 'default',
+          indentUnit: 4,
+        });
+      }
 
-// 加载题目选择器
-function initProblemSelector() {
-    const selector = document.getElementById('problemSelector');
-    Object.keys(problems).forEach(key => {
-        const option = document.createElement('option');
-        option.value = key;
-        option.textContent = problems[key].title;
-        selector.appendChild(option);
-    });
-}
+      // 加载题目选择器
+      function initProblemSelector() {
+        const selector = document.getElementById('problemSelector');
+        Object.keys(problems).forEach((key) => {
+          const option = document.createElement('option');
+          option.value = key;
+          option.textContent = problems[key].title;
+          selector.appendChild(option);
+        });
+      }
 
-// 加载题目
-function loadProblem(problemId) {
-    currentProblem = problemId;
-    const problem = problems[problemId];
-    
-    // 更新描述
-    document.getElementById('problemDescription').innerHTML = `
+      // 加载题目
+      function loadProblem(problemId) {
+        currentProblem = problemId;
+        const problem = problems[problemId];
+
+        // 更新描述
+        document.getElementById('problemDescription').innerHTML = `
         <h2>${problem.title}</h2>
         <p>${problem.description}</p>
     `;
-    
-    // 更新代码编辑器
-    editor.setValue(problem.initialCode);
-}
 
-// 带超时的安全执行
-async function executeSafely(func, args, timeout=2000) {
-    return new Promise((resolve, reject) => {
-        const timer = setTimeout(() => {
+        // 更新代码编辑器
+        editor.setValue(problem.initialCode);
+      }
+
+      // 带超时的安全执行
+      async function executeSafely(func, args, timeout = 2000) {
+        return new Promise((resolve, reject) => {
+          const timer = setTimeout(() => {
             reject(new Error('执行超时'));
-        }, timeout);
+          }, timeout);
 
-        try {
+          try {
             const result = func(...args);
             clearTimeout(timer);
             resolve(result);
-        } catch (error) {
+          } catch (error) {
             clearTimeout(timer);
             reject(error);
-        }
-    });
-}
+          }
+        });
+      }
 
-// 运行测试
-async function runTests() {
-    const problem = problems[currentProblem];
-    const userCode = editor.getValue();
-    const resultsDiv = document.getElementById('results');
-    resultsDiv.innerHTML = '';
+      // 运行测试
+      async function runTests() {
+        const problem = problems[currentProblem];
+        const userCode = editor.getValue();
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = '';
 
-    try {
-        // 动态创建测试函数
-        const params = problem.params;
-        const funcBody = `
+        try {
+          // 动态创建测试函数
+          const params = problem.params;
+          const funcBody = `
             ${userCode}
             return ${problem.funcName}(${params.join(', ')});
         `;
-        
-        const userFunc = new Function(...params, funcBody);
 
-        // 执行所有测试用例
-        for (const [index, testCase] of problem.testCases.entries()) {
+          const userFunc = new Function(...params, funcBody);
+
+          // 执行所有测试用例
+          for (const [index, testCase] of problem.testCases.entries()) {
             const testDiv = document.createElement('div');
             testDiv.className = 'test-case';
-            
+
             try {
-                const result = await executeSafely(
-                    userFunc,
-                    testCase.args
-                );
-                
-                const success = JSON.stringify(result) === JSON.stringify(testCase.expected);
-                
-                testDiv.innerHTML = `
+              const result = await executeSafely(userFunc, testCase.args);
+
+              const success =
+                JSON.stringify(result) === JSON.stringify(testCase.expected);
+
+              testDiv.innerHTML = `
                     <strong>测试 ${index + 1}:</strong> ${success ? '✅ 通过' : '❌ 失败'}
                     <div>输入: ${formatArgs(testCase.args)}</div>
                     <div>预期: ${formatValue(testCase.expected)}</div>
                     <div>实际: ${formatValue(result)}</div>
                 `;
-                
-                testDiv.style.backgroundColor = success ? '#e8f5e9' : '#ffebee';
+
+              testDiv.style.backgroundColor = success ? '#e8f5e9' : '#ffebee';
             } catch (error) {
-                testDiv.innerHTML = `
+              testDiv.innerHTML = `
                     <strong>测试 ${index + 1}: ❌ 运行时错误</strong>
                     <div>错误信息: ${error.message}</div>
                 `;
-                testDiv.style.backgroundColor = '#fff3e0';
+              testDiv.style.backgroundColor = '#fff3e0';
             }
-            
+
             resultsDiv.appendChild(testDiv);
-        }
-    } catch (error) {
-        resultsDiv.innerHTML = `
+          }
+        } catch (error) {
+          resultsDiv.innerHTML = `
             <div class="test-case" style="background-color: #fff3e0">
                 ❌ 编译错误: ${error.message}
             </div>
         `;
-    }
-}
+        }
+      }
 
-// 辅助格式化函数
-function formatArgs(args) {
-    return args.map(arg => 
-        Array.isArray(arg) ? `[${arg.join(', ')}]` : arg
-    ).join(', ');
-}
+      // 辅助格式化函数
+      function formatArgs(args) {
+        return args
+          .map((arg) => (Array.isArray(arg) ? `[${arg.join(', ')}]` : arg))
+          .join(', ');
+      }
 
-function formatValue(value) {
-    return typeof value === 'object' 
-        ? JSON.stringify(value) 
-        : value;
-}
+      function formatValue(value) {
+        return typeof value === 'object' ? JSON.stringify(value) : value;
+      }
 
-// 初始化
-window.onload = () => {
-    initEditor();
-    initProblemSelector();
-    loadProblem(currentProblem);
-};
-</script>
-</body>
+      // 初始化
+      window.onload = () => {
+        initEditor();
+        initProblemSelector();
+        loadProblem(currentProblem);
+      };
+    </script>
+  </body>
 </html>

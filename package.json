@@ -1,18 +1,48 @@
 {
-	"name": "@healwrap/big-fe-oj",
-	"private": true,
-	"version": "0.0.0",
-	"type": "module",
-	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
-		"preview": "vite preview"
-	},
-	"dependencies": {
-		"vue": "^3.5.13"
-	},
-	"devDependencies": {
-		"@vitejs/plugin-vue": "^5.2.1",
-		"vite": "^6.2.0"
-	}
+  "name": "@healwrap/fe-oj",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "prepare": "husky install",
+    "precommit": "lint-staged",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.vue --ignore-path .gitignore",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@healwrap/fe-oj-components": "workspace:*",
+    "@healwrap/fe-oj-lint": "workspace:*",
+    "eslint": "7.17.0",
+    "eslint-plugin-vue": "7.4.1",
+    "husky": "^7.0.2",
+    "lint-staged": "^15.5.0",
+    "prettier": "^3.3.3"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,vue}": [
+      "eslint --fix --ignore-path .gitignore",
+      "prettier --write --ignore-unknown"
+    ],
+    "!(*.ts|*.tsx|*.js|*.jsx|*.vue)": "prettier --write --ignore-unknown"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "subject-case": [
+        2,
+        "always",
+        [
+          "sentence-case",
+          "lower-case"
+        ]
+      ]
+    }
+  }
 }
