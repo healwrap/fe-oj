@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { XddButton } from '@healwrap/fe-oj-components';
 import { XddInput } from '@healwrap/fe-oj-components/input';
+// import { Button } from 'ant-design-vue';
 const types = ref(['primary', 'default', 'dashed', 'text', 'link']);
 </script>
 
@@ -16,6 +17,7 @@ const types = ref(['primary', 'default', 'dashed', 'text', 'link']);
     <div class="input">
       <xdd-input></xdd-input>
     </div>
+    <Button type="primary">Ant Design Button</Button>
   </div>
 </template>
 

@@ -1,3 +1,4 @@
+console.log(window.ts);
 document.addEventListener('DOMContentLoaded', () => {
   // 获取DOM元素
   const outputPanel = document.getElementById('output-panel');

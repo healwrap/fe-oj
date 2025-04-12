@@ -28,6 +28,7 @@ const styles = ref(['outlined', 'filled', 'borderless', 'underlined']);
 </template>
 
 <style lang="scss" scoped>
+@use 'sass:color';
 .xdd-input-wrapper {
   position: relative;
   display: inline-flex;
