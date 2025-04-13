@@ -17,11 +17,14 @@
     "@commitlint/config-conventional": "^19.8.0",
     "@healwrap/fe-oj-components": "workspace:*",
     "@healwrap/fe-oj-lint": "workspace:*",
-    "eslint": "7.17.0",
-    "eslint-plugin-vue": "7.4.1",
-    "husky": "^7.0.2",
+    "eslint": "^8.56.0",
+    "eslint-plugin-vue": "^9.19.2",
+    "husky": "^8.0.3",
     "lint-staged": "^15.5.0",
-    "prettier": "^3.3.3"
+    "prettier": "^3.3.3",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "typescript": "~5.5.0"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,vue}": [

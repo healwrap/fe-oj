@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import { ref } from 'vue';
 import { XddButton } from '@healwrap/fe-oj-components';
 import { XddInput } from '@healwrap/fe-oj-components/input';
