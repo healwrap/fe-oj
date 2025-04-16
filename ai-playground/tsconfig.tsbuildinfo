@@ -1,0 +1,1 @@
+{"root":["./src/app.vue","./src/main.ts","./src/components/chatcontainer/index.vue","./src/components/markdownpreview/index.vue","./src/components/markdownpreview/plugin-theme.ts","./src/components/messagecontainer/index.vue","./src/components/messageloading/index.vue","./src/components/messagereason/index.vue","./src/types/common.d.ts","./src/utils/index.ts"],"version":"5.7.3"}

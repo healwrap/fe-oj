@@ -139,7 +139,6 @@ withDefaults(
       font-size: 15px;
       line-height: 1.5;
       word-wrap: break-word;
-      white-space: pre-wrap;
 
       &.loading-container {
         display: flex;

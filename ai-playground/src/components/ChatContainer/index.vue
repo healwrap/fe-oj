@@ -12,7 +12,8 @@
       <template #content>
         <!-- 文字内容 -->
         <template v-if="typeof message.content === 'string'">
-          {{ message.content }}
+          <template v-if="message.role === 'user'">{{ message.content }}</template>
+          <MarkdownPreview v-else :value="message.content" />
         </template>
         <!-- 图片 -->
         <!-- 视频 -->
@@ -29,6 +30,7 @@
 import { inject, ref } from 'vue';
 import MessageContainer from '@/components/MessageContainer/index.vue';
 import MessageReason from '@/components/MessageReason/index.vue';
+import MarkdownPreview from '@/components/MarkdownPreview/index.vue';
 
 const { model } = defineProps<{
   model: Model;
